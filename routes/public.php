@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +19,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+//Post=Publicaciones
+Route::get('pposts/{post}', [
+  'uses' => 'PostController@show',
+  'as' => 'posts.show'
+]);//->where('post', '[0-9]+')
+
+

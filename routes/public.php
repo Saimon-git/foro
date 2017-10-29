@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 //Post=Publicaciones
-Route::get('pposts/{post}', [
+Route::get('posts/{post}-{slug}', [
   'uses' => 'PostController@show',
   'as' => 'posts.show'
 ]);//->where('post', '[0-9]+')

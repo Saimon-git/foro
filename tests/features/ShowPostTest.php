@@ -1,8 +1,7 @@
 <?php
 
-use App\Post;
 
-class ShowPostTest extends TestCase
+class ShowPostTest extends FeaturesTestCase
 {
     function test_a_user_can_see_a_post_details()
     {
@@ -13,12 +12,13 @@ class ShowPostTest extends TestCase
     		'name' => 'Simon Montoya',
     	]);
 
-    	$post = factory(Post::class)->make([
+    	$post = $this->createPost([
     		'title' => 'Este es el titulo del post',
     		'content' => 'Este es el contenido del post',
+            'user_id' => $user->id,
     	]);
 
-    	$user->posts()->save($post);
+    	//$user->posts()->save($post); comentado por refactoring en model factory
 
     	//When
     	//(lo que sucede eventos)
@@ -27,7 +27,7 @@ class ShowPostTest extends TestCase
         //(resultado)
     			->seeInElement('h1',$post->title)
     			->see($post->content)
-    			->see($user->name);        
+    			->see('Simon Montoya');        
     }
 
     function test_old_url_are_redirected()
@@ -35,13 +35,13 @@ class ShowPostTest extends TestCase
         //Having 
         //(lo que tenemos)
         
-        $user = $this->defaultUser();
+        //$user = $this->defaultUser(); comentado por refactoring en model factory
 
-        $post = factory(Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Titulo viejo',            
         ]);
 
-        $user->posts()->save($post);
+        //$user->posts()->save($post); comentado por refactoring en model factory
 
         $url = $post->url;
 

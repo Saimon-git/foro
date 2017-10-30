@@ -9,7 +9,7 @@ class CommentController extends Controller
 {
     public function store(Request $request, Post $post)
     {
-    	dd($request->all());
+    	
     	$this->validate($request, [
     	    'comment' => 'required'    	    
     	]);

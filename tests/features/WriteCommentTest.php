@@ -40,7 +40,7 @@ class WriteCommentTest extends FeaturesTestCase
         $this->seePageIs(route('login'));
     }
 
-    /*function test_create_comment_form_validation()
+    function test_create_comment_form_validation()
     {
 
         //Having
@@ -52,12 +52,10 @@ class WriteCommentTest extends FeaturesTestCase
         
         $this->actingAs($user)
         		->visit($post->url)
-        		->type('Un comentario', 'comment')
+        		->type('', 'comment')
         		->press('Publicar comentario')
 		//Then        		
         		->seePageIs($post->url)
-                ->seeErrors([
-                    'comment' => 'El campo comentario es obligatorio'                    
-                ]);                
-    }*/
+                ->see('El campo comentario es obligatorio');                
+    }
 }

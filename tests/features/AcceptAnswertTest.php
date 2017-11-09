@@ -26,6 +26,6 @@ class AcceptAnswertTest extends FeaturesTestCase
         ]);                
 
         $this->seePageIs($comment->post->url)
-        		->seeInElement('.answer', $comment->comment);
+        		->seeInElement('.answer', $comment->comment); 
     }
 }

@@ -142,8 +142,7 @@ return [
         'minute'                => 'minuto',
         'second'                => 'segundo',
         'title'                 => 'título',
-        'content'               => 'contenido',
-        'comment'               => 'comentario',
+        'content'               => 'contenido',        
         'body'                  => 'contenido',
         'description'           => 'descripción',
         'excerpt'               => 'extracto',
@@ -151,6 +150,7 @@ return [
         'time'                  => 'hora',
         'subject'               => 'asunto',
         'message'               => 'mensaje',
+        'comment'               => 'comentario',
     ],
 
 ];

@@ -23,6 +23,6 @@ class CommentController extends Controller
     {
         $comment->markAsAnswer();
     	
-    	return redirect($comment->   post->url);
+    	return redirect($comment->post->url);
     }
 }

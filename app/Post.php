@@ -6,6 +6,7 @@ use App\User;
 use App\Comment;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Post extends Model
 {
@@ -23,6 +24,11 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class,'subscriptions');
+    }
+
     public function setTitleAttribute($value)
     {
     	$this->attributes['title'] = $value;
@@ -38,5 +44,10 @@ class Post extends Model
     public function latestComments()
     {
         return $this->comments()->orderBy('created_at','DESC');
+    }
+
+    public function getSafeHtmlContentAttribute()
+    {
+        return Markdown::convertToHtml(e($this->content));
     }
 }

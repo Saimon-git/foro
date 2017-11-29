@@ -23,3 +23,14 @@ Route::post('comments/{comment}/accept', [
   'uses' => 'CommentController@accept',
   'as' => 'comments.accept'
 ]);
+
+//Subscriptions = Subscribciones
+Route::post('posts/{post}/subscribe', [
+  'uses' => 'SubscriptionController@subscribe',
+  'as' => 'posts.subscribe'
+]);
+
+Route::delete('posts/{post}/unsubscribe', [
+  'uses' => 'SubscriptionController@unsubscribe',
+  'as' => 'posts.unsubscribe'
+]);

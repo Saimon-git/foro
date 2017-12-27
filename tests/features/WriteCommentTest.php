@@ -40,7 +40,7 @@ class WriteCommentTest extends FeaturesTestCase
         		->press('Publicar comentario');
 
         //Then
-        $this->seePageIs(route('login'));
+        $this->seePageIs(route('token'));
     }
 
     function test_create_comment_form_validation()

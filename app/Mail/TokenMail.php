@@ -11,7 +11,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class TokenMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    /**
+     * @var 
+     */
     public $token;
 
     /**
@@ -31,6 +33,6 @@ class TokenMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('emails.token');
     }
 }

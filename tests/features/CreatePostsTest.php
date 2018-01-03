@@ -16,12 +16,15 @@ class CreatePostsTest extends FeaturesTestCase
         $content = 'Este es el contenido';
 
         $this->actingAs($user);
+
+        $category = factory(\App\Category::class)->create();
     	
         //When
         //(lo que sucede eventos)
         $this->visit(route('posts.create'))
     			->type($title, 'title')
-    			->type($content, 'content')
+                ->type($content, 'content')
+                ->select($category->id, 'category_id')
     			->press('Publicar');
 
         //Then 
@@ -32,6 +35,7 @@ class CreatePostsTest extends FeaturesTestCase
     		'pending' => true,
             'user_id' =>$user->id,
             'slug' => 'esta-es-una-pregunta',
+            'category_id' => $category->id,
     	]);
 
         $post = Post::first();

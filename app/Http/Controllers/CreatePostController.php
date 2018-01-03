@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\{Post,Category};
 use Illuminate\Http\Request;
 
 class CreatePostController extends Controller
@@ -14,7 +14,8 @@ class CreatePostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::pluck('name','id')->toArray();
+        return view('posts.create', ['categories' => $categories] );
     }
 
     /**
@@ -27,7 +28,8 @@ class CreatePostController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'category_id' => 'required|exists:categories,id',
         ]);
         $post = auth()->user()->createPost($request->all());
 

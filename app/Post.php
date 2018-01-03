@@ -4,19 +4,25 @@ namespace App;
 
 use App\User;
 use App\Comment;
+use App\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Post extends Model
 {
-    protected $fillable = ['title','content'];
+    protected $fillable = ['title','content','category_id'];
 
     protected $casts = ['pending' => 'boolean'];
 
     public function user()
     {
     	return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Catagory::class);
     }
 
     public function comments()

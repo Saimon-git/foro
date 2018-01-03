@@ -14,12 +14,17 @@ class PostIntegrationTest extends TestCase
         	'title' => 'Como instalar Laravel',
         ]);
 
+        $this->assertSame(
+            'como-instalar-laravel',
+            $post->fresh()->slug
+        );
+
         //$user->posts()->save($post); comentado por mejoras en el factory
 
-        $this->seeInDatabase('posts', [
+        /* $this->seeInDatabase('posts', [
         	'slug' =>  'como-instalar-laravel',
         ]);
 
-        //$this->assertSame('como-instalar-laravel', $post->fresh()->slug);
+        $this->assertSame('como-instalar-laravel', $post->fresh()->slug); */
     }
 }

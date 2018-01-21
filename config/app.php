@@ -171,7 +171,7 @@ return [
         Styde\Html\HtmlServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         \Laravel\Tinker\TinkerServiceProvider::class,
-        \Laravel\Dusk\DuskServiceProvider::class,
+        //\Laravel\Dusk\DuskServiceProvider::class,
 
         //
 

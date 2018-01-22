@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\{Post, Category};
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class ListPostController extends Controller
 {
-    public function index(Category $category = null, Request $request)
+    public function __invoke(Category $category = null, Request $request)
     {
         $routeName = $request->route()->getName();
 
@@ -23,19 +23,7 @@ class PostController extends Controller
         $categoryItems = $this->getCategoryItems($routeName);
 
         return view('posts.index', compact('posts', 'category', 'categoryItems'));
-    }
-    
-    public function show(Post $post, $slug)
-    {
-        if ($post->slug != $slug) {
-            return redirect($post->url, 301);
-        }
-
-        return view('posts.show', [
-		    'post' => $post,
-		    'comments' => $post->latestComments()->paginate(15),
-		]);
-    }
+    }    
 
     protected function getCategoryItems(string $routeName)
     {

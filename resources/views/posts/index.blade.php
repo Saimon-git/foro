@@ -16,16 +16,11 @@
             {!! Menu::make($categoryItems, 'nav categories') !!}
         </div>
         <div class="col-md-10">
-            <ul>
-                @foreach($posts as $post)
-                    <li>
-                        <a href="{{ $post->url }}">
-                            {{ $post->title }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-
+            @each('posts.item', $posts, 'post')
+            {{--  @foreach($posts as $post)
+                @include('posts.item', $post)
+            @endforeach  --}}
+            
             {{ $posts->render() }}
         </div>
     </div>

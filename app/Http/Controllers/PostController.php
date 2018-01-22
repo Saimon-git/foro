@@ -11,10 +11,14 @@ class PostController extends Controller
     {
         $routeName = $request->route()->getName();
 
+        list($orderColumn, $orederDirection) = $this->getListOrder($request->get('orden'));
+
         $posts = Post::query()
             ->scopes($this->getListScopes($category, $routeName))
-            ->latest()
+            ->orderBy($orderColumn, $orederDirection)
             ->paginate();
+        
+        $posts->appends(request()->intersect(['orden']));
 
         $categoryItems = $this->getCategoryItems($routeName);
 
@@ -64,5 +68,18 @@ class PostController extends Controller
         }
 
         return $scopes;
+    }
+
+    protected function getListOrder($orden)
+    {
+        if ($orden == 'recientes') {
+            return ['created_at', 'desc'];
+        }
+
+        if ($orden == 'antiguos') {
+            return ['created_at', 'asc'];
+        }
+
+        return ['created_at', 'desc'];
     }
 }

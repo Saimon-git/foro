@@ -65,6 +65,11 @@ class Post extends Model
         $query->where('pending',true);
     }
 
+    public function scopeByUser($query, User $user)
+    {
+        $query->where('user_id',$user->id);
+    }
+
     public function scopeCompleted($query)
     {
         $query->where('pending',false);

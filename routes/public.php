@@ -32,3 +32,5 @@ Route::get('{category?}', [
     'uses' => 'ListPostController',
     'as' => 'posts.index'
 ]);
+
+

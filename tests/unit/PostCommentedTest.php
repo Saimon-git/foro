@@ -22,7 +22,7 @@ class PostCommentedTest extends TestCase
             'last_name' => 'Montoya',
         ]);
         $comment = new Comment;
-        $comment->post = $post;
+        $comment->post = $post;        
         $comment->user = $author;
         $notification = new PostCommented($comment);
 

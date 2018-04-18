@@ -14,7 +14,9 @@ class ListPostController extends Controller
         list($orderColumn, $orederDirection) = $this->getListOrder($request->get('orden'));
 
         $posts = Post::query()
-            ->scopes($this->getListScopes($category, $request))
+            ->with(['user','category'])
+            ->category($category)
+            ->scopes($this->getRouteScope($request))
             ->orderBy($orderColumn, $orederDirection)
             ->paginate()
             ->appends($request->intersect(['orden']));
@@ -22,42 +24,37 @@ class ListPostController extends Controller
 
         return view('posts.index', compact('posts', 'category'));
     }    
-
+/* 
     protected function getListScopes(Category $category, Request $request)
     {
-        $scopes = [];
+        $scopes = $this->getRouteScope($request);
 
-        $routeName = $request->route()->getName();
-
-        if ($category->exists) {
-            $scopes['category'] = [$category];
-        }
-
-        if ($routeName == 'posts.mine') {
-            $scopes['byUser'] = [$request->user()];
-        }
-
-        if ($routeName == 'posts.pending') {
-            $scopes[] = 'pending';
-        }
-
-        if ($routeName == 'posts.completed') {
-            $scopes[] = 'completed';
-        }
-
+        
+        $scopes['category'] = [$category];
+        
         return $scopes;
+    } */
+
+    protected function getRouteScope(Request $request)
+    {
+        $scopes = [
+            'posts.mine' => ['byUser' => [$request->user()]],
+            'posts.pending' => ['pending'],
+            'posts.completed' => ['completed']
+        ];
+        
+        return $scopes[$request->route()->getName()] ?? [];
+        //return isset($scopes[$name]) ? $scopes[$name] : [];
+
     }
 
-    protected function getListOrder($orden)
+    protected function getListOrder($order)
     {
-        if ($orden == 'recientes') {
-            return ['created_at', 'desc'];
-        }
-
-        if ($orden == 'antiguos') {
-            return ['created_at', 'asc'];
-        }
-
-        return ['created_at', 'desc'];
+        $orders = [
+            'recientes' => ['created_at', 'desc'],
+            'antiguos'  => ['created_at', 'asc'],
+        ];
+        
+        return $orders[$order] ??  ['created_at', 'desc'];
     }
 }

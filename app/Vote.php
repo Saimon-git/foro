@@ -12,18 +12,12 @@ class Vote extends Model
     public static function upvote(Post $post)
     {
 
-        static::addVote($post,1);
+         static::addVote($post,1);
     }
 
     public static function downvote(Post $post)
     {
-        static::addVote($post,-1);
-    }
-
-    protected static function refreshPostScore(Post $post)
-    {
-        $post->score = static::where(['post_id' => $post->id])->sum('vote');
-        $post->save();
+         static::addVote($post,-1);
     }
 
     protected static function addVote(Post $post,$amount)
@@ -33,7 +27,7 @@ class Vote extends Model
             ['vote' => $amount]
         ); 
         
-        static::refreshPostScore($post);
+         static::refreshPostScore($post);
     }
 
     public static function undoVote(Post $post)
@@ -43,6 +37,12 @@ class Vote extends Model
             'user_id' => auth()->id()
         ])->delete(); 
         
-        static::refreshPostScore($post);
+         static::refreshPostScore($post);
+    }
+
+    protected static function refreshPostScore(Post $post)
+    {
+        $post->score = static::where(['post_id' => $post->id])->sum('vote');
+        $post->save();         
     }
 }

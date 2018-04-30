@@ -3,14 +3,17 @@
 namespace App;
 
 use App\User;
+use App\Vote;
 use App\Comment;
 use App\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use App\Traits\CanBeVoted;
 
 class Post extends Model
 {
+    use CanBeVoted;
     protected $fillable = ['title','content','category_id'];
 
     protected $casts = [
@@ -82,4 +85,6 @@ class Post extends Model
     {
         return Markdown::convertToHtml(e($this->content));
     }
+
+    
 }

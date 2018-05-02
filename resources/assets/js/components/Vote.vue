@@ -5,7 +5,9 @@
              :class="currentVote == 1 ? 'btn-primary' : 'btn-default'"
              class="btn">+1</button>
             Puntuacion actual : <strong id="current-score">{{currentScore}}</strong>
-            <button @click.prevent="downvote" class="btn btn-default">-1</button>
+            <button @click.prevent="downvote" 
+                :class="currentVote == -1 ? 'btn-primary' : 'btn-default'"
+                class="btn">-1</button>
         </form>
     </div>
 </template>
@@ -18,34 +20,44 @@
         ],
         data(){
             return {
-                currentVote: this.vote,
-                currentScore: this.score,
+                currentVote: this.vote ? parseInt(this.vote) : null,
+                currentScore: parseInt(this.score),
             }
         },
         methods : {
             upvote() {
-                if (this.currentVote ==1 ) {
+                this.addVote(1);
 
-                    this.currentScore--;
+            },
+            downvote() {
+               this.addVote(-1);
+            },
+            addVote(amount) {
+                if (this.currentVote == amount ) {
 
-                    axios.delete(window.location.href + '/vote');
+                    this.currentScore -= this.currentVote;
+
+                    this.processRequest('delete', 'vote');
 
                     this.currentVote = null;                     
                 }
                 else{
 
-                    this.currentScore++;
+                    this.currentScore += this.currentVote ? (amount * 2) : amount;
 
-                    axios.post(window.location.href + '/upvote');
-
-                    this.currentVote = 1;                    
+                    this.processRequest('post', amount == 1 ? 'upvote' : 'downvote');
+                    
+                    this.currentVote = amount; 
                 }
-
             },
-            downvote() {
-                axios.post(window.location.href + '/downvote')
-
+            processRequest(method, action) {
+                axios[method](this.buildUrl()).then((response) => {
+                        this.currentScore = response.data.new_score;    
+                    });
             },
+            buildUrl(action) {
+                return window.location.href + '/'+ action;
+            }
 
         }
     }

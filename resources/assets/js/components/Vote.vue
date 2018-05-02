@@ -3,10 +3,12 @@
         <form>
             <button @click.prevent="upvote"
              :class="currentVote == 1 ? 'btn-primary' : 'btn-default'"
+             :disabled="voteInProgress"
              class="btn">+1</button>
             Puntuacion actual : <strong id="current-score">{{currentScore}}</strong>
             <button @click.prevent="downvote" 
                 :class="currentVote == -1 ? 'btn-primary' : 'btn-default'"
+                :disabled="voteInProgress"
                 class="btn">-1</button>
         </form>
     </div>
@@ -22,6 +24,7 @@
             return {
                 currentVote: this.vote ? parseInt(this.vote) : null,
                 currentScore: parseInt(this.score),
+                voteInProgress: false,
             }
         },
         methods : {
@@ -33,9 +36,12 @@
                this.addVote(-1);
             },
             addVote(amount) {
+
+                this.voteInProgress = true;
+
                 if (this.currentVote == amount ) {
 
-                    this.currentScore -= this.currentVote;
+                    //this.currentScore -= this.currentVote;
 
                     this.processRequest('delete', 'vote');
 
@@ -43,7 +49,7 @@
                 }
                 else{
 
-                    this.currentScore += this.currentVote ? (amount * 2) : amount;
+                    //this.currentScore += this.currentVote ? (amount * 2) : amount;
 
                     this.processRequest('post', amount == 1 ? 'upvote' : 'downvote');
                     
@@ -51,8 +57,14 @@
                 }
             },
             processRequest(method, action) {
-                axios[method](this.buildUrl()).then((response) => {
-                        this.currentScore = response.data.new_score;    
+                axios[method](this.buildUrl(action)).then((response) => {
+                        this.currentScore = response.data.new_score;
+                        
+                        this.voteInProgress = false;
+                    }).catch((thrown) =>  {
+                        alert('Ocurrio un error!');
+
+                        this.voteInProgress = false;
                     });
             },
             buildUrl(action) {

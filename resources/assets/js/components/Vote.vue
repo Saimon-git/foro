@@ -19,6 +19,7 @@
         props:[
             'score',
             'vote',
+            'post_id',
         ],
         data(){
             return {
@@ -68,7 +69,7 @@
                     });
             },
             buildUrl(action) {
-                return window.location.href + '/'+ action;
+                return '/posts/' + this.post_id + '/'+ action;
             }
 
         }

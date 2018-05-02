@@ -7,6 +7,11 @@ use App\{Vote, User};
 trait CanBeVoted
 {
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     public function getCurrentVoteAttribute()
     {
         if(auth()->check())
@@ -18,7 +23,9 @@ trait CanBeVoted
 
     public function getVoteFrom(User $user)
     {
-        return Vote::where('user_id',$user->id)->value('vote');//+1, -1, null
+        return $this->votes()
+                    ->where('user_id',$user->id)
+                    ->value('vote');//+1, -1, null                    
     }
     
     public function upvote()
@@ -44,17 +51,16 @@ trait CanBeVoted
 
     public function undoVote()
     {
-        Vote::where([
-            'post_id' => $this->id, 
-            'user_id' => auth()->id()
-        ])->delete(); 
-        
-         $this->refreshPostScore();
+        $this->votes()
+                ->where('user_id' , auth()->id())
+                ->delete();
+
+        $this->refreshPostScore();
     }
 
     protected function refreshPostScore()
     {
-        $this->score = Vote::where(['post_id' => $this->id])->sum('vote');
+        $this->score = $this->votes()->sum('vote');
         $this->save();         
     }
 }

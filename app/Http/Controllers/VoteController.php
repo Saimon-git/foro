@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\{Post,Vote};
 use App\Repositories\VoteRepository;
 
-class VotePostController extends Controller
+class VoteController extends Controller
 {
     
     /**
@@ -15,7 +15,7 @@ class VotePostController extends Controller
      * @param Post $post
      * @return void
      */
-    public function upvote(Post $post)
+    /* public function upvote(Post $post)
     {
         //dd('here');
         $post->upvote();
@@ -45,5 +45,26 @@ class VotePostController extends Controller
             'new_score' => $post->score
         ];
 
+    } */
+    public function upvote($module, $votable)
+    {
+        $votable->upvote();
+        return [
+            'new_score' => $votable->score,
+        ];
+    }
+    public function downvote($module, $votable)
+    {
+        $votable->downvote();
+        return [
+            'new_score' => $votable->score,
+        ];
+    }
+    public function undoVote($module, $votable)
+    {
+        $votable->undoVote();
+        return [
+            'new_score' => $votable->score,
+        ];
     }
 }

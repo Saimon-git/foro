@@ -19,12 +19,15 @@
                     <span class="label label-success">Completado</span>
                 @endif
             </p>
-            
+            @if(Auth::check())
             <app-vote 
-                post_id="{{$post->id}}"
+                module="posts"
+                votable_id="{{$post->id}}"
                 score="{{$post->score}}" 
                 vote="{{$post->current_vote}}">
             </app-vote>
+            @else
+            @endif
 
             {!! $post->safe_html_content !!}
 
@@ -47,11 +50,21 @@
             {{-- todo: Paginate comments! --}}
 
             @foreach ($comments as $comment)
-				<article class="{{$comment->answer ? 'answer' : ''}}">
+				<article class="comment {{$comment->answer ? 'answer' : ''}}">
 					<h5>{{ $comment->user->name }}</h5>
 					<p>
 					{{$comment->comment}}
-					</p>
+                    </p>
+                    @if(Auth::check())
+                    <app-vote
+                        module ="comments"
+                        votable_id="{{$comment->id}}"
+                        score="{{$comment->score}}" 
+                        vote="{{$comment->current_vote}}">
+                    </app-vote>
+                    @else
+                    @endif
+                    
 					
 					@if(Gate::allows('accept',$comment) && !$comment->answer)
 					{!! Form::open(['route' => ['comments.accept',$comment],  'method' => 'POST',]) !!}

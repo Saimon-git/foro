@@ -15,11 +15,15 @@
         @else
         <span class="label label-success">Completado</span>
         @endif
+        @if(Auth::check())
         <app-vote 
-                post_id="{{$post->id}}"
+                module="posts"
+                votable_id="{{$post->id}}"
                 score="{{$post->score}}" 
                 vote="{{$post->current_vote}}">
         </app-vote>
+        @else
+        @endif
     
     <hr>
 </article>

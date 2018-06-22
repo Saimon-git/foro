@@ -5,7 +5,7 @@
              :class="currentVote == 1 ? 'btn-primary' : 'btn-default'"
              :disabled="voteInProgress"
              class="btn">+1</button>
-            Puntuacion actual : <strong id="current-score">{{currentScore}}</strong>
+            Puntuacion actual : <strong class="current-score">{{currentScore}}</strong>
             <button @click.prevent="downvote" 
                 :class="currentVote == -1 ? 'btn-primary' : 'btn-default'"
                 :disabled="voteInProgress"
@@ -19,7 +19,8 @@
         props:[
             'score',
             'vote',
-            'post_id',
+            'votable_id',
+            'module',
         ],
         data(){
             return {
@@ -69,7 +70,7 @@
                     });
             },
             buildUrl(action) {
-                return '/posts/' + this.post_id + '/'+ action;
+                return '/'+this.module+'/' + this.votable_id + '/'+ action;
             }
 
         }

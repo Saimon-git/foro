@@ -23,12 +23,13 @@ class APostCanBeVotedTest extends TestCase
     function test_a_post_can_be_upvoted()
     {
         $this->post->upvote();
+        
 
-        $this->assertDatabaseHas('votes', [
+        /* $this->assertDatabaseHas('votes', [
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'vote' => 1,
-        ]);
+        ]); */
 
         $this->assertSame(1,$this->post->score);
 
@@ -43,11 +44,11 @@ class APostCanBeVotedTest extends TestCase
 
         $this->assertSame(1, Vote::count());
 
-        $this->assertDatabaseHas('votes', [
+        /* $this->assertDatabaseHas('votes', [
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'vote' => 1,
-        ]);
+        ]); */
 
         $this->assertSame(1,$this->post->score);
 
@@ -58,11 +59,11 @@ class APostCanBeVotedTest extends TestCase
         
         $this->post->downvote();
 
-        $this->assertDatabaseHas('votes', [
+        /* $this->assertDatabaseHas('votes', [
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'vote' => -1,
-        ]);
+        ]); */
 
         $this->assertSame(-1,$this->post->score);
 
@@ -77,11 +78,11 @@ class APostCanBeVotedTest extends TestCase
 
         $this->assertSame(1, Vote::count());
 
-        $this->assertDatabaseHas('votes', [
+        /* $this->assertDatabaseHas('votes', [
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'vote' => -1,
-        ]);
+        ]); */
 
         $this->assertSame(-1,$this->post->score);
 
@@ -95,11 +96,11 @@ class APostCanBeVotedTest extends TestCase
 
         $this->assertSame(1, Vote::count());
 
-        $this->assertDatabaseHas('votes', [
+        /* $this->assertDatabaseHas('votes', [
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'vote' => -1,
-        ]);
+        ]); */
 
         $this->assertSame(-1,$this->post->score);
 
@@ -113,11 +114,11 @@ class APostCanBeVotedTest extends TestCase
 
         $this->assertSame(1, Vote::count());
 
-        $this->assertDatabaseHas('votes', [
+        /* $this->assertDatabaseHas('votes', [
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'vote' => 1,
-        ]);
+        ]); */
 
         $this->assertSame(1,$this->post->score);
 
@@ -125,9 +126,9 @@ class APostCanBeVotedTest extends TestCase
 
     function test_the_post_score_is_calculated_correctly()
     {
-        Vote::create([
-            'user_id' => $this->anyone()->id , 
-            'post_id' => $this->post->id,
+
+        $this->post->votes()->create([
+            'user_id' => $this->anyone()->id ,
             'vote' => 1,
         ]);
 
@@ -141,13 +142,11 @@ class APostCanBeVotedTest extends TestCase
     {
         $this->post->upvote();
 
-        $this->post->undoVote();
+        $this->assertSame(1,$this->post->current_vote);
 
-        $this->assertDatabaseMissing('votes', [
-            'post_id' => $this->post->id,
-            'user_id' => $this->user->id,
-            'vote' => 1,
-        ]);
+        $this->post->undoVote();
+        
+        $this->assertNull($this->post->current_vote);
 
         $this->assertSame(0,$this->post->score);
 

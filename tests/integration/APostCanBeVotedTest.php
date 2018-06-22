@@ -145,8 +145,6 @@ class APostCanBeVotedTest extends TestCase
         $this->assertSame(1,$this->post->current_vote);
 
         $this->post->undoVote();
-        
-        $this->assertNull($this->post->current_vote);
 
         $this->assertSame(0,$this->post->score);
 

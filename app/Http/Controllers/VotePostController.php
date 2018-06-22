@@ -17,7 +17,7 @@ class VotePostController extends Controller
      */
     public function upvote(Post $post)
     {
-        dd('here');
+        //dd('here');
         $post->upvote();
         
         return [

@@ -30,7 +30,7 @@ trait CanBeVoted
     
     public function upvote()
     {
-
+        dd('here');
          $this->addVote(1);
     }
 

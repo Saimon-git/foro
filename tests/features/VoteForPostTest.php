@@ -2,9 +2,6 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Vote;
-use App\Repositories\VoteRepository;
-
-
 
 class VoteForPostTest extends TestCase
 {
@@ -15,8 +12,8 @@ class VoteForPostTest extends TestCase
         $this->actingAs($user = $this->defaultUser());
 
         $post = $this->createPost();
-
-        $this->postJson($post->url . '/upvote')
+        dd('/posts/'.$post->id);
+        $this->postJson($post->id . '/upvote')
             ->assertSuccessful()
             ->assertJson([
                 'new_score' => 1,

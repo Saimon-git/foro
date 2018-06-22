@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
+use App\{Post,Vote};
 use App\Repositories\VoteRepository;
 
 class VotePostController extends Controller
@@ -17,6 +17,7 @@ class VotePostController extends Controller
      */
     public function upvote(Post $post)
     {
+        dd('here');
         $post->upvote();
         
         return [

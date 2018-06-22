@@ -73,6 +73,7 @@
 
             {!! Form::close() !!}
         </div>
+        
 
         @include('posts.sidebar')
     </div>

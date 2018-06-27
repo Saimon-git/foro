@@ -168,10 +168,10 @@ return [
         /*
          * Package Service Providers...
          */
-        Styde\Html\HtmlServiceProvider::class,
+        /* Styde\Html\HtmlServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class, */
         //\Laravel\Dusk\DuskServiceProvider::class,
 
         //

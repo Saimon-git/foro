@@ -22,7 +22,7 @@ class ListPostController extends Controller
             ->scopes($this->getRouteScope($request))
             ->orderBy($orderColumn, $orederDirection)
             ->paginate()
-            ->appends($request->intersect(['orden']));
+            ->appends(array_filter($request->only(['orden'])));
         
 
         return view('posts.index', compact('posts', 'category'));

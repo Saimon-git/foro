@@ -22,4 +22,13 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        request()->session()->invalidate();
+
+        return redirect('/');
+    }
 }

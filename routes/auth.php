@@ -1,6 +1,6 @@
 <?php 
 //Rotes that require authentication = Estas rutas requieren estar autenticado.
-Route::post('logout', 'Auth\LoginController@logout');
+Route::post('logout', 'LoginController@logout');
 
 //Posts = Publicaciones
 Route::get('posts/create', [

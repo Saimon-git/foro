@@ -43,10 +43,5 @@ trait TestsHelper
             AuthenticationException::class
         ]);
     }
-    protected function handleAuthorizationExceptions()
-    {
-        $this->withoutExceptionHandling([
-            AuthorizationException::class
-        ]);
-    }
+    
 }

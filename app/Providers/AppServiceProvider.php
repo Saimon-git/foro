@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
-use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Http\Composers\PostSideBarComposer;
@@ -27,9 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /* if ($this->app->environment('local', 'testing','Foro')) {
-            $this->app->register(DuskServiceProvider::class);
-        } */
+        if ($this->app->environment('local', 'testing','Foro')) {
+            $this->app->register(\Laravel\Dusk\DuskServiceProvider::class);
+        }
 
         Carbon::setLocale(config('app.locale'));
 

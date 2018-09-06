@@ -27,9 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment('local', 'testing','Foro')) {
+        /* if ($this->app->environment('local', 'testing','Foro')) {
             $this->app->register(DuskServiceProvider::class);
-        }
+        } */
 
         Carbon::setLocale(config('app.locale'));
 
